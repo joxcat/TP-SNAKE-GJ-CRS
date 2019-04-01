@@ -1,3 +1,5 @@
+"use strict";
+
 document.addEventListener("DOMContentLoaded", function () {
     updateContent();
 
@@ -8,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function updateContent() {
     if (window.location.hash.length > 1) {
-        changeLevel(window.location.hash.substr(1))
+        changeLevel(window.location.hash.substr(1));
     } else {
         document.getElementById("content").innerHTML = "<div><a href=\"#1\">Niveau 1</a><a href=\"#2\">Niveau 2</a></div>";
     }
@@ -34,6 +36,17 @@ function getLevel(id) {
     xhttp.send();
 }
 
-function loadLevel() {
-    
+function loadLevel(data) {
+    let canvas = document.getElementById("snake-canvas");
+    let pxX = data['dimensions'][0] / canvas.width;
+    let pxY = data['dimensions'][1] / canvas.height;
+
+    console.log(pxX + " " + pxY + " -> " + canvas.width + " " + canvas.height);
+
+    let ctx = canvas.getContext("2d");
+    let fruit = new Image();
+    fruit.src = "./assets/images/Brigitte.png";
+    fruit.addEventListener("load", function () {
+        ctx.drawImage(fruit, 10, 10, 10, 10);
+    });
 }
