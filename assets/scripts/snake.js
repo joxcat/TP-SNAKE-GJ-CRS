@@ -45,8 +45,8 @@ function getLevel(id) {
 
 function loadLevel(data) {
     let canvas = document.getElementById("snake-canvas");
-    let pxX = data['dimensions'][0] / canvas.width;
-    let pxY = data['dimensions'][1] / canvas.height;
+    let pxX = canvas.width / data['dimensions'][0];
+    let pxY = canvas.height / data['dimensions'][1];
 
     console.log(pxX + " " + pxY + " -> " + canvas.width + " " + canvas.height);
 
@@ -54,6 +54,12 @@ function loadLevel(data) {
     let fruit = new Image();
     fruit.src = "./assets/images/Brigitte.png";
     fruit.addEventListener("load", function () {
-        ctx.drawImage(fruit, 10, 10, 10, 10);
+        ctx.drawImage(fruit, data['fruit'][0] * pxX, data['fruit'][1] * pxY, pxX, pxY);
     });
+
+    renderGame(ctx, data, pxX, pxY);
+}
+
+function renderGame(ctx, data, pxX, pxY) {
+    
 }
