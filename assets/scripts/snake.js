@@ -4,6 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("hashchange", function () {
         updateContent();
     });
+
+    window.addEventListener("resize", function () {
+        let ratio = 0.7;
+        let elem = document.getElementById("snake-canvas");
+        elem.setAttribute("width", document.querySelector("body").offsetWidth*ratio);
+        elem.setAttribute("height", document.querySelector("body").offsetHeight*ratio);
+    });
 });
 
 function updateContent() {
