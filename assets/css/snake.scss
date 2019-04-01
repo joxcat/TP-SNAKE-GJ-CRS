@@ -1,4 +1,5 @@
 #snake-canvas {
-  width: 80%;
-  height: 80%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }

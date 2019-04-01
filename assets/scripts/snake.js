@@ -15,7 +15,10 @@ function updateContent() {
 }
 
 function changeLevel(id) {
-    document.getElementById("content").innerHTML = "<div><a href='./'>Retour</a></div><canvas id='snake-canvas' data-level='" + id + "'>Votre navigateur ne supporte pas les canvas</canvas>";
+    let ratio = 0.75;
+    let w = document.querySelector("body").offsetWidth*ratio;
+    let h = document.querySelector("body").offsetHeight*ratio;
+    document.getElementById("content").innerHTML = "<div><a href='./'>Retour</a></div><canvas id='snake-canvas' data-level='" + id + "' width='"+w+"' height='"+h+"'>Votre navigateur ne supporte pas les canvas</canvas>";
     getLevel(id);
 }
 
