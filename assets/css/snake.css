@@ -1,55 +1,51 @@
 * {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 html, body {
   position: relative;
   height: 100%;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #7bc67b;
-}
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #7bc67b; }
 
 h1 {
   padding-top: 1em;
   text-align: center;
   color: #ffffb5;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
 #content {
   position: absolute;
   top: 7rem;
   left: 50%;
-  transform: translate(-50%, -25%);
-}
-#content div {
-  margin-bottom: 1.15em;
-}
-#content div a {
-  font-size: 1.5em;
-  text-decoration: none;
-  color: #5a3921;
-  padding: 0.5em 0.75em;
-  border-radius: 2rem;
-  transition: background-color 0.25s ease-out, color 0.25s ease-out, transform 30s ease-in 7s, box-shadow 0.5s ease-out;
-}
-#content div a:hover {
-  background-color: #5a3921;
-  color: #ffffb5;
-  transform: scale(115);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-#content div a:not(:nth-of-type(1)) {
-  margin-left: 0.75em;
-}
+  transform: translate(-50%, -25%); }
+  #content div {
+    margin-bottom: 1.15em; }
+    #content div a {
+      font-size: 1.5em;
+      text-decoration: none;
+      color: #5a3921;
+      padding: 0.5em 0.75em;
+      border-radius: 2rem;
+      transition: background-color .25s ease-out, color .25s ease-out,  transform 30s ease-in 7s, box-shadow 0.5s ease-out; }
+      #content div a:hover {
+        background-color: #5a3921;
+        color: #ffffb5;
+        transform: scale(115);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  #content[data-return="YEAH"] {
+    top: 5.5rem; }
+    #content[data-return="YEAH"] div {
+      margin-bottom: .75rem; }
+      #content[data-return="YEAH"] div a {
+        padding: 0;
+        background-color: transparent;
+        transform: scale(0);
+        box-shadow: none; }
 
 #snake-canvas {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   border: solid 10px #6b8c42;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-
-/*# sourceMappingURL=snake.css.map */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }

@@ -24,9 +24,9 @@ function updateContent() {
 }
 
 function changeLevel(id) {
-    let ratio = 0.7;
-    let w = document.querySelector("body").offsetWidth*ratio;
-    let h = document.querySelector("body").offsetHeight*ratio;
+    let w = document.querySelector("body").offsetWidth*0.97;
+    let h = document.querySelector("body").offsetHeight*0.75;
+    document.getElementById("content").setAttribute("data-return", "YEAH");
     document.getElementById("content").innerHTML = "<div><a href='./'>Retour</a></div><canvas id='snake-canvas' data-level='" + id + "' width='"+w+"' height='"+h+"'>Votre navigateur ne supporte pas les canvas</canvas>";
     getLevel(id);
 }
