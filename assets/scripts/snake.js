@@ -1,4 +1,11 @@
 "use strict";
+const WALL = 1;
+const FRUIT = 2;
+const SNAKE_TAIL = 3;
+const DIR_NORTH = 0;
+const DIR_EST = 1;
+const DIR_SOUTH = 2;
+const DIR_WEST = 3;
 
 document.addEventListener("DOMContentLoaded", function () {
     updateContent();
@@ -51,15 +58,72 @@ function loadLevel(data) {
     console.log(pxX + " " + pxY + " -> " + canvas.width + " " + canvas.height);
 
     let ctx = canvas.getContext("2d");
-    let fruit = new Image();
-    fruit.src = "./assets/images/Brigitte.png";
-    fruit.addEventListener("load", function () {
-        ctx.drawImage(fruit, data['fruit'][0] * pxX, data['fruit'][1] * pxY, pxX, pxY);
-    });
+    let gameTable = Array(data['dimensions'][0]);
+    for (let i = 0; i < data['dimensions'][1]; i++) {
+        gameTable[i] = Array(data['dimensions'][1]);
+    }
 
-    renderGame(ctx, data, pxX, pxY);
+    console.log(gameTable);
+
+    for (let i = 0; i < data['walls'].length; i++) {
+        console.log(data['walls'][i]);
+        for (let j = data['walls'][i][0]; j <= data['walls'][i][2]; j++) {
+            for (let k = data['walls'][i][1]; k <= data['walls'][i][3]; k++) {
+                gameTable[j][k] = WALL;
+            }
+        }
+    }
+
+    gameTable[data['fruit'][0]][data['fruit'][1]] = FRUIT;
+
+    loadImages(function (fruit, snakeHead, snakeTail, wall) {
+        renderGame(fruit, snakeHead, snakeTail, wall, ctx, data, pxX, pxY, gameTable, data['snake'][0], data['snake'][1], DIR_EST);
+    });
 }
 
-function renderGame(ctx, data, pxX, pxY) {
-    
+function loadImages(callback) {
+    let countImg = 0;
+    let fruit = new Image();
+    let snakeHead = new Image();
+    let snakeTail = new Image();
+    let wall = new Image();
+
+    fruit.src = "./assets/images/Brigitte.png";
+    fruit.addEventListener("load", function () {
+        countImg++;
+        if (countImg == 4) callback(fruit, snakeHead, snakeHead, wall);
+    });
+
+    snakeHead.src = "./assets/images/Cronmac.png";
+    fruit.addEventListener("load", function () {
+        countImg++;
+        if (countImg == 4) callback(fruit, snakeHead, snakeHead, wall);
+    });
+
+    snakeTail.src = "./assets/images/CRS.png";
+    snakeTail.addEventListener("load", function () {
+        countImg++;
+        if (countImg == 4) callback(fruit, snakeHead, snakeHead, wall);
+    });
+
+    wall.src = "./assets/images/GJ.png";
+    wall.addEventListener("load", function () {
+        countImg++;
+        if (countImg == 4) callback(fruit, snakeHead, snakeHead, wall);
+    });
+}
+
+function renderGame(fruit, snakeHead, snakeTail, wall, ctx, data, pxX, pxY, gameTable, snakeHeadX, snakeHeadY, snakeDir) {
+    ctx.drawImage(snakeHead, snakeHeadX * pxX, snakeHeadY * pxY, pxX, pxY);
+    for (let i = 0; i < gameTable.length; i++) {
+        for (let j = 0; j < gameTable[i].length; j++) {
+            if (gameTable[i][j] == WALL) {
+                ctx.drawImage(wall, i * pxX, j * pxY, pxX, pxY);
+            } else if (gameTable[i][j] == FRUIT) {
+                ctx.drawImage(fruit, i * pxX, j * pxY, pxX, pxY);
+            } else if (gameTable[i][j] == SNAKE_TAIL) {
+                ctx.drawImage(snakeTail, i * pxX, j * pxY, pxX, pxY);
+            }
+        }
+    }
 }
