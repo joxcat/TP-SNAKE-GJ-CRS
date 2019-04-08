@@ -6,6 +6,11 @@ const DIR_NORTH = 0;
 const DIR_EST = 1;
 const DIR_SOUTH = 2;
 const DIR_WEST = 3;
+const ARROW_UP = 38;
+const ARROW_DOWN = 40;
+const ARROW_LEFT = 37;
+const ARROW_RIGHT = 39;
+let game = {}
 
 document.addEventListener("DOMContentLoaded", function () {
     updateContent();
@@ -15,11 +20,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     window.addEventListener("resize", function () {
-        let ratio = 0.7;
+        let ratio = 0.75;
         let elem = document.getElementById("snake-canvas");
-        elem.setAttribute("width", document.querySelector("body").offsetWidth*ratio);
+        elem.setAttribute("width", document.querySelector("body").offsetHeight*ratio);
         elem.setAttribute("height", document.querySelector("body").offsetHeight*ratio);
     });
+
+    window.onkeydown = (evt) => {
+        switch (evt.keyCode) {
+            case ARROW_UP:
+                game.direction = DIR_NORTH;
+                break;
+            case ARROW_DOWN:
+                game.direction = DIR_SOUTH;
+                break;
+            case ARROW_LEFT:
+                game.direction = DIR_WEST;
+                break;
+            case ARROW_RIGHT:
+                game.direction = DIR_EST;
+                break;
+        }
+    }    
 });
 
 function updateContent() {
@@ -27,11 +49,12 @@ function updateContent() {
         changeLevel(window.location.hash.substr(1));
     } else {
         document.getElementById("content").innerHTML = "<div><a href=\"#1\">Niveau 1</a><a href=\"#2\">Niveau 2</a></div>";
+        game.active = false;
     }
 }
 
 function changeLevel(id) {
-    let w = document.querySelector("body").offsetWidth*0.97;
+    let w = document.querySelector("body").offsetHeight*0.75;
     let h = document.querySelector("body").offsetHeight*0.75;
     document.getElementById("content").setAttribute("data-return", "YEAH");
     document.getElementById("content").innerHTML = "<div><a href='./'>Retour</a></div><canvas id='snake-canvas' data-level='" + id + "' width='"+w+"' height='"+h+"'>Votre navigateur ne supporte pas les canvas</canvas>";
@@ -114,7 +137,20 @@ function loadImages(callback) {
 }
 
 function renderGame(fruit, snakeHead, snakeTail, wall, ctx, data, pxX, pxY, gameTable, snakeHeadX, snakeHeadY, snakeDir) {
-    ctx.drawImage(snakeHead, snakeHeadX * pxX, snakeHeadY * pxY, pxX, pxY);
+    game = {
+        active: true,
+        posx: pxX,
+        posy: pxY,
+        direction: DIR_NORTH,
+        childs: []
+        /*childs are like
+        {
+            posx: float
+            posy: float
+        }
+        */
+    }
+    ctx.drawImage(snakeHead, snakeHeadX * game.posx, snakeHeadY * game.posy, game.posx, game.posy);
     for (let i = 0; i < gameTable.length; i++) {
         for (let j = 0; j < gameTable[i].length; j++) {
             if (gameTable[i][j] == WALL) {
@@ -126,4 +162,25 @@ function renderGame(fruit, snakeHead, snakeTail, wall, ctx, data, pxX, pxY, game
             }
         }
     }
+    final();
+}
+
+function final() {
+    setInterval(()=> {
+        switch (game.direction) {
+            case DIR_NORTH:
+                game.posy -= snakeHeadY;
+                break;
+            case DIR_EST:
+                game.posx += snakeHeadX;
+                break;
+            case DIR_SOUTH:
+                game.posy += snakeHeadY;
+                break;
+            case DIR_WEST:
+                game.posx -= snakeHeadX;
+        }
+        ctx.drawImage(snakeHead, snakeHeadX * game.pxX, snakeHeadY * game.pxY, game.pxX, game.pxY);
+        console.log(game);
+    }, data['delay'])
 }
